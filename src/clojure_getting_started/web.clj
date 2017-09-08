@@ -4,7 +4,8 @@
             [compojure.route :as route]
             [clojure.java.io :as io]
             [ring.adapter.jetty :as jetty]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [camel-snake-kebab.core :as kebab]))
 
 (defn splash []
   {:status 200
@@ -12,6 +13,18 @@
    :body "Hello from Heroku"})
 
 (defroutes app
+  (GET "/camel" {{input :input} :params}
+       {:status 200
+        :headers {"Content-Type" "text/plain"}
+        :body (kebab/->CamelCase input)})
+  (GET "/snake" {{input :input} :params}
+       {:status 200
+        :headers {"Content-Type" "text/plain"}
+        :body (kebab/->snake_case input)})
+  (GET "/kebab" {{input :input} :params}
+       {:status 200
+        :headers {"Content-Type" "text/plain"}
+        :body (kebab/->kebab-case input)})
   (GET "/" []
        (splash))
   (ANY "*" []
