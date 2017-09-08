@@ -1,4 +1,7 @@
 
+# Preamble
+This app was changed to work with heroku-redis addon instead of heroku-postgres.
+
 # clojure-getting-started
 
 A barebones Clojure app, which can easily be deployed to Heroku.  
